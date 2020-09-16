@@ -13,12 +13,7 @@ async def invite_people(client: Client,message: Message):
     from_group,to_group,max_number=message.command[1].strip('@'),\
                                message.command[2].strip('@'),\
                                min(50,int(message.command[3]))
-    client_id=(await client.get_me()).id
     try:
-        try:
-            await client.get_chat_member(from_group,client_id)
-        except UserNotParticipant:
-            await client.join_chat(from_group)
         added=0
         members=await client.get_chat_members(from_group,200)
         shuffle(members)
@@ -27,11 +22,14 @@ async def invite_people(client: Client,message: Message):
             if user.is_bot:
                 continue
             try:
-                await client.add_chat_members(to_group,user.id)
-            except Exception as e:
-                print(e)
-                continue
-            added+=1
+                await client.get_chat_member(from_group,user.id)
+            except UserNotParticipant:
+                try:
+                    await client.add_chat_members(to_group,user.id)
+                except Exception as e:
+                    print(e)
+                    continue
+                added+=1
             if added>=max_number:
                 break
         await message.reply_text(f'Added {added} members from @{from_group} to @{to_group}')

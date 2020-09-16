@@ -5,9 +5,7 @@ import asyncio
 async def main():
     client=Client('+2347054467363')
     await client.start()
-    async for dialog in client.iter_dialogs():
-        chat=dialog.chat
-        print(chat.type,chat.username if chat.username else chat.title,chat.id)
+    print(await client.get_chat_member('sqmonitor_chat',(await client.get_me()).id))
     await client.stop()
 
 
