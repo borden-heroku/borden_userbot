@@ -22,7 +22,7 @@ async def invite_people(client: Client,message: Message):
             if user.is_bot:
                 continue
             try:
-                await client.get_chat_member(from_group,user.id)
+                await client.get_chat_member(to_group,user.id)
             except UserNotParticipant:
                 try:
                     await client.add_chat_members(to_group,user.id)
