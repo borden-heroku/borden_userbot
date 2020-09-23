@@ -3,9 +3,8 @@ import asyncio
 
 
 async def main():
-    client=Client('+2347054467363')
+    client=Client('+2349067976861')
     await client.start()
-    print(await client.get_chat_member('sqmonitor_chat',(await client.get_me()).id))
     await client.stop()
 
 
